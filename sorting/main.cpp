@@ -1,3 +1,5 @@
+// ¬вод адресов из файла, сортировка по городу, вывод в файл
+
 #include<iostream>
 #include<string>
 #include<fstream>
@@ -47,7 +49,29 @@ public:
 		house = 0;
 		flat = 0;
 	}
+	 // конструктор с параметрами
+	address(std::string city, std::string street, int house, int flat) {
+		this -> city = city;
+		this -> street = street;
+		this -> house = house;
+		this -> flat = flat;
+	}
 
+	// конструктор копировани€
+	address(const address& other) {
+		this->city = other.city;
+		this->street = other.street;
+		this->house = other.house;
+		this->flat = other.flat;
+	}
+	// оператор присваивани€
+	address& operator = (const address& other) {
+		this->city = other.city;
+		this->street = other.street;
+		this->house = other.house;
+		this->flat = other.flat;
+		return *this;
+	}
 };
 
 
@@ -69,18 +93,67 @@ int main() {
 	}
 	else
 	{
+		int n = 0; // количество блоков с адресами
+		fin >> n;
+		
+
+		address* arr = new address[n];       //создали динамический массив из N обьектов
+
+		for (int i = 0; i < n; i++)        // цикл перебора всех элементов массива обьектов
+		{                             
+			std::string b;               // считывание строк одного блока адресов из файла in.txt
+			fin >> b;                   // и инициализаци€ полей экземпл€ра класса address номер i.
+			arr[i].set_city(b);
+			fin >> b;
+			arr[i].set_street(b);
+			int c = 0;
+			fin >> c;
+			arr[i].set_house(c);
+			fin >> c;
+			arr[i].set_flat(c);
+		}
+		
+			address p;
+
+		for (bool swapped = true; swapped;)
+		{
+
+			swapped = false;
+
+			for (int i = 0; i < n; i++)
+			{
+
+				std::string c = arr[i].get_city();
+				std::string v = arr[i + 1].get_city();
+				int d = c.compare(v);
+
+				if (d == -1)
+				{
+					p = arr[i];
+					arr[i] = arr[i + 1];
+					arr[i + 1] = p;
+					swapped = true;
+				}
+
+		    }
+		}
+
+		           
+
+		fout << n << "\n";
+		for (int i = 0; i < n; i++)  // цикл вывода в файл в измененном виде адресов из полей 
+		{                            // экземпл€ров
+			fout << arr[i].get_city() << ", ";
+			fout << arr[i].get_street() << ", ";
+			fout << arr[i].get_house() << ", ";
+			fout << arr[i].get_flat() << "\n";
+		}
+		delete[]arr;
 
 
-
-
+		fin.close();
+		fout.close();
 	}
-
-
-
-
-
-
-
 
 
 
