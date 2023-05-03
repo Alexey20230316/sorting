@@ -117,12 +117,10 @@ int main() {
 
 		for (bool swapped = true; swapped;)
 		{
-
 			swapped = false;
 
-			for (int i = 0; i < n; i++)
+			for (int i = 0; i < n - 1; i++)
 			{
-
 				std::string c = arr[i].get_city();
 				std::string v = arr[i + 1].get_city();
 				int d = c.compare(v);
